@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Year2Kill</title>
-    <link rel="icon" type="image/x-icon" href="maglogo.ico"> <!-- Favicon link -->
     <link rel="stylesheet" href="styles.css">
     <style>
         @font-face {
@@ -146,13 +145,14 @@
     </style>
 </head>
 <body>
-    <!-- Background Video -->
+
+    <!-- Video Background -->
     <video autoplay muted loop class="background-video">
         <source src="wb.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
-    <!-- Floating Logo -->
+    <!-- Floating Logo at the top -->
     <img src="y2k crossbones.png" alt="Year2Kill Logo" class="logo">
 
     <!-- Navigation Bar -->
@@ -162,9 +162,59 @@
         <a href="Y2K Contact.html">CONTACT</a>
     </div>
 
-    <!-- Shop Section -->
-    <div class="shop-section">
-        <p>Explore the <a href="Y2K Shop.html">Year2Kill Shop</a> for exclusive magazines and more!</p>
+    <!-- Landing Section -->
+    <div class="landing">
+        <img src="Y2K Website Pages/y2kp1.png" alt="Year2Kill Cover" id="magazine" class="magazine letter">
+        <img src="buttonback.png" alt="Previous" class="nav-button left" onclick="prevPage()">
+        <img src="buttonforward.png" alt="Next" class="nav-button right" onclick="nextPage()">
     </div>
+
+    <!-- Shop Section -->
+    <div class="shop-section" id="shop">
+        <h2>Shop Our Collection</h2>
+        <p>Find exclusive Year2Kill merchandise and more.</p>
+        <p><a href="Y2K Shop.html">Visit the Shop</a></p>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 12; // From y2kp1.png, 0.png to 11.png, y2kp24.png
+
+        function updatePage() {
+            const magazine = document.getElementById('magazine');
+            let pageSrc = '';
+
+            if (currentPage === 1) {
+                pageSrc = 'Y2K Website Pages/y2kp1.png';  // Cover page (8.5x11)
+                magazine.classList.add('letter');
+                magazine.classList.remove('tabloid');
+            } else if (currentPage === totalPages) {
+                pageSrc = 'Y2K Website Pages/y2kp24.png'; // Final page (8.5x11)
+                magazine.classList.add('letter');
+                magazine.classList.remove('tabloid');
+            } else {
+                pageSrc = Y2K Website Pages/${currentPage - 1}.png; // 0.png to 10.png (11x17)
+                magazine.classList.add('tabloid');
+                magazine.classList.remove('letter');
+            }
+
+            magazine.src = pageSrc;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePage();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePage();
+            }
+        }
+    </script>
+
 </body>
 </html>
