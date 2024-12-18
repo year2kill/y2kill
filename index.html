@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year2Kill</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @font-face {
+            font-family: 'Impact';
+            src: local('Impact');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            flex-direction: column; /* Stacks the logo, nav, and content vertically */
+            overflow: hidden; /* Prevent scrolling */
+            font-family: 'Impact', sans-serif; /* Apply Impact font */
+            cursor: url('C:/Users/year2/OneDrive/Desktop/Year2Kill/Year2Kill Website/s&b.ani'), auto; /* Custom cursor */
+        }
+
+        /* Video background styling */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire screen */
+            z-index: -1; /* Sends the video behind all content */
+        }
+
+        /* Logo styling and floating animation */
+        .logo {
+            margin-top: 20px;
+            max-width: 300px;
+            width: 100%;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            margin-top: 10px;
+            font-size: 24px; /* Slightly larger font for visibility */
+            font-weight: bold;
+            z-index: 2; /* Ensures it's above the video */
+            color: white;
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: red; /* Color change on hover */
+        }
+
+        .landing {
+            position: relative;
+            width: 80%;
+            max-width: 1000px;
+            z-index: 1; /* Keeps magazine on top of video */
+            margin-top: 20px;
+        }
+
+        .magazine {
+            display: block;
+            margin: 0 auto;
+            transition: none;
+        }
+
+        .magazine.letter {
+            width: 45%; /* Slightly increase scaling for 8.5x11 pages */
+            max-width: 700px; /* Moderate magazine size */
+        }
+
+        .magazine.tabloid {
+            width: 85%; /* Slightly increase scaling for 11x17 pages */
+            max-width: 1100px; /* Moderate magazine size */
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+        }
+
+        .nav-button.left {
+            left: 10px;
+        }
+
+        .nav-button.right {
+            right: 10px;
+        }
+
+        /* Shop Section */
+        .shop-section {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.7); /* Slight background for better readability */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .shop-section a {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .shop-section a:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video Background -->
+    <video autoplay muted loop class="background-video">
+        <source src="wb.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Floating Logo at the top -->
+    <img src="y2k crossbones.png" alt="Year2Kill Logo" class="logo">
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="Y2K Index.html">HOME</a> | 
+        <a href="Y2K Shop.html">SHOP</a> | 
+        <a href="Y2K Contact.html">CONTACT</a>
+    </div>
+
+    <!-- Landing Section -->
+    <div class="landing">
+        <img src="Y2K Website Pages/y2kp1.png" alt="Year2Kill Cover" id="magazine" class="magazine letter">
+        <img src="buttonback.png" alt="Previous" class="nav-button left" onclick="prevPage()">
+        <img src="buttonforward.png" alt="Next" class="nav-button right" onclick="nextPage()">
+    </div>
+
+    <!-- Shop Section -->
+    <div class="shop-section" id="shop">
+        <h2>Shop Our Collection</h2>
+        <p>Find exclusive Year2Kill merchandise and more.</p>
+        <p><a href="Y2K Shop.html">Visit the Shop</a></p>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 12; // From y2kp1.png, 0.png to 11.png, y2kp24.png
+
+        function updatePage() {
+            const magazine = document.getElementById('magazine');
+            let pageSrc = '';
+
+            if (currentPage === 1) {
+                pageSrc = 'Y2K Website Pages/y2kp1.png';  // Cover page (8.5x11)
+                magazine.classList.add('letter');
+                magazine.classList.remove('tabloid');
+            } else if (currentPage === totalPages) {
+                pageSrc = 'Y2K Website Pages/y2kp24.png'; // Final page (8.5x11)
+                magazine.classList.add('letter');
+                magazine.classList.remove('tabloid');
+            } else {
+                pageSrc = `Y2K Website Pages/${currentPage - 1}.png`; // 0.png to 10.png (11x17)
+                magazine.classList.add('tabloid');
+                magazine.classList.remove('letter');
+            }
+
+            magazine.src = pageSrc;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePage();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePage();
+            }
+        }
+    </script>
+
+</body>
+</html>
